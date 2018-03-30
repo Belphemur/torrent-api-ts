@@ -1,4 +1,8 @@
-export default class Token {
+export interface TokenResponse {
+  readonly token: string
+}
+
+export class Token implements TokenResponse {
   readonly token: string
   private date: Date
 
