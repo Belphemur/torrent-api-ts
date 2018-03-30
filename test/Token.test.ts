@@ -9,4 +9,10 @@ describe('Token', () => {
     let token = new Token('Test')
     expect(token.hasExpired()).toBeFalsy()
   })
+
+  it('should be invalidated', () => {
+    let token = new Token('Test')
+    token.invalidate()
+    expect(token.hasExpired()).toBeTruthy()
+  })
 })

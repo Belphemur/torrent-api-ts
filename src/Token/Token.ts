@@ -5,6 +5,7 @@ export interface TokenResponse {
 export class Token implements TokenResponse {
   readonly token: string
   private date: Date
+  private invalid: boolean = false
 
   constructor(token: string) {
     this.token = token
@@ -16,7 +17,9 @@ export class Token implements TokenResponse {
    * @returns {Token}
    */
   static expired(): Token {
-    return new Token('')
+    const token = new Token('')
+    token.invalid = true
+    return token
   }
 
   /**
@@ -24,6 +27,13 @@ export class Token implements TokenResponse {
    * @returns {boolean}
    */
   public hasExpired(): boolean {
-    return this.token === '' || (Date.now() - +this.date) / 60000 >= 14
+    return this.invalid || (Date.now() - +this.date) / 60000 >= 14
+  }
+
+  /**
+   * Invalidate a token
+   */
+  public invalidate(): void {
+    this.invalid = true
   }
 }
