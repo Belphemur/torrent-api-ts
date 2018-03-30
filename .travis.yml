@@ -6,6 +6,7 @@ node_js:
   - '9'
   - '8'
 after_success:
+  - coveralls < coverage/lcov.info
   - yarn run travis-deploy-once "yarn run semantic-release"
 branches:
   except:
