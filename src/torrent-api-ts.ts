@@ -16,6 +16,11 @@ export interface RequestParams {
   [key: string]: any
 }
 
+export interface ErrorResponse {
+  error: string
+  error_code?: number
+}
+
 export default class TorrentSearch {
   private _appName: string
   private _userAgent: string = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'
@@ -66,30 +71,50 @@ export default class TorrentSearch {
 
   private ensureToken(): Promise<Token> {
     if (this._token.hasExpired()) {
-      return this._delayedRequest<TokenResponse>({ get_token: 'get_token' }).then(data => {
-        this._token = new Token(data.token)
-        return this._token
-      })
+      return this._delayedRequest<TokenResponse>({ get_token: 'get_token' })
+        .then(data => {
+          return new Token(data.token)
+        })
+        .then((token: Token) => {
+          this._token = token
+          return token
+        })
+        .catch(e => {
+          console.warn('Couldn\t get the token')
+          throw e
+        })
     }
     return Promise.resolve(this._token)
   }
 
   private _request<T>(params: RequestParams): Promise<T> {
-    return this.ensureToken().then(() => {
-      return this._delayedRequest<T>(params)
-    })
+    return this.ensureToken()
+      .then(() => {
+        return this._delayedRequest<T>(params)
+      })
+      .catch(e => {
+        if (e.hasOwnProperty('error_code') && e.error_code === 4) {
+          this._token.invalidate()
+          return this._request<T>(params)
+        }
+        throw e
+      })
   }
 
   private _delayedRequest<T>(params: RequestParams): Promise<T> {
     if (this._lastRequest) {
       const currentTimeDiff = Date.now() - +this._lastRequest
       if (currentTimeDiff <= 2100) {
-        return new Promise<T>(resolve => setTimeout(resolve, 2100 - currentTimeDiff)).then(() =>
-          this._processRequest<T>(params)
-        )
+        return new Promise<T>(resolve => setTimeout(resolve, 2100 - currentTimeDiff))
+          .then(() => this._processRequest<T>(params))
+          .catch(e => {
+            throw e
+          })
       }
     }
-    return this._processRequest<T>(params)
+    return this._processRequest<T>(params).catch(e => {
+      throw e
+    })
   }
 
   private _processRequest<T>(params: RequestParams): Promise<T> {
@@ -110,8 +135,17 @@ export default class TorrentSearch {
 
     return Request(options)
       .then((response: any) => JSON.parse(response))
+      .then(data => {
+        if (data.error_code) {
+          throw data as ErrorResponse
+        }
+        return data
+      })
       .then((data: any) => {
         return data as T
+      })
+      .catch(e => {
+        throw e
       })
   }
 }
