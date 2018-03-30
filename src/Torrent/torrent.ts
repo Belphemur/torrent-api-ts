@@ -9,3 +9,7 @@ export interface ITorrent {
   readonly size: number
   readonly episode_info: IEpisodeInfo
 }
+
+export interface TorrentCollection {
+  readonly torrent_results: Array<ITorrent>
+}
