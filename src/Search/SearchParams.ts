@@ -27,3 +27,18 @@ export interface SearchParams extends RequestParams {
   sort?: SortOrder
   limit?: number
 }
+
+export class DefaultSearch implements SearchParams {
+  readonly search_string?: string
+  readonly category: SearchCategory
+  format: JsonFormat = JsonFormat.JSON_EXTENDED
+  ranked?: boolean = false
+  sort?: SortOrder = SortOrder.SEEDERS
+  limit?: number = 100
+  mode: string = 'search'
+
+  constructor(searchString: string, category: SearchCategory) {
+    this.search_string = searchString
+    this.category = category
+  }
+}
