@@ -1,14 +1,12 @@
 language: node_js
-cache:
-  directories:
-    - ~/.npm
+cache: yarn
 notifications:
   email: false
 node_js:
   - '9'
   - '8'
 after_success:
-  - npm run travis-deploy-once "npm run semantic-release"
+  - yarn run travis-deploy-once "yarn run semantic-release"
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
