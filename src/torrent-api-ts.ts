@@ -1,21 +1,9 @@
 import { Token, TokenResponse } from './Token/Token'
 import Request from 'request-promise-native'
-import { DefaultSearch, SearchCategory, SearchParams } from './Search/SearchParams'
+import { DefaultSearch, SearchCategory, SearchParams } from './Request/SearchParams'
 import { TorrentCollection } from './Torrent/torrent'
-
-export interface RequestParams {
-  mode?: string
-  get_token?: string
-  app_id?: string
-  token?: string
-
-  [key: string]: any
-}
-
-export interface ErrorResponse extends Error {
-  error: string
-  error_code?: number
-}
+import { ErrorResponse } from './Error/Error'
+import { RequestParams } from './Request/Params'
 
 export default class TorrentSearch {
   private _appName: string
@@ -100,7 +88,7 @@ export default class TorrentSearch {
         return this._delayedRequest<T>(params)
       })
       .catch(e => {
-        if (e.hasOwnProperty('error_code') && e.error_code === 4) {
+        if (e instanceof ErrorResponse && e.code === 4) {
           this._token.invalidate()
           return this._request<T>(params)
         }
@@ -146,9 +134,7 @@ export default class TorrentSearch {
       .then((response: any) => JSON.parse(response))
       .then(data => {
         if (data.error_code) {
-          const error = data as ErrorResponse
-          error.message = error.error
-          return Promise.reject(error)
+          return Promise.reject(new ErrorResponse(data.error, data.error_code))
         }
         return data
       })

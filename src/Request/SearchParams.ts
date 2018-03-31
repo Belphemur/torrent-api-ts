@@ -1,4 +1,4 @@
-import { RequestParams } from '../torrent-api-ts'
+import { RequestParams } from './Params'
 
 export enum SearchCategory {
   TV = 'tv',

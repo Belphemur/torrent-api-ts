@@ -1,5 +1,5 @@
 import TorrentSearch from '../src/torrent-api-ts'
-import { SearchCategory } from '../src/Search/SearchParams'
+import { SearchCategory } from '../src/Request/SearchParams'
 import nock from 'nock'
 import searchResponse from './response/search'
 import errorTokenInvalid from './response/errorToken'
