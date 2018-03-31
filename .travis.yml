@@ -17,5 +17,5 @@ script:
   - yarn test:prod && yarn build
 after_success:
   - yarn report-coverage
-  - yarn travis-deploy-once "yarn deploy-docs"
-  - yarn travis-deploy-once "yarn semantic-release"
+  - if [[ $TRAVIS_BRANCH == 'master' ]] yarn travis-deploy-once "yarn deploy-docs" fi
+  - if [[ $TRAVIS_BRANCH == 'master' ]] yarn travis-deploy-once "yarn semantic-release" fi

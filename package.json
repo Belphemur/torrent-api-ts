@@ -12,7 +12,7 @@
   "author": "Antoine Aflalo <antoine@aaflalo.me>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Belphemur/torrent-api-ts"
   },
   "license": "MIT",
   "engines": {
