@@ -75,7 +75,7 @@ export default class TorrentSearch {
           return token
         })
         .catch(e => {
-          console.warn('Couldn\t get the token')
+          console.warn("Couldn't get the token")
           throw e
         })
     }
