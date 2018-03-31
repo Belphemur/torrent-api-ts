@@ -1,7 +1,7 @@
 import { Token, TokenResponse } from './Token/Token'
 import Request from 'request-promise-native'
 import { DefaultSearch, SearchCategory, SearchParams } from './Request/SearchParams'
-import { TorrentCollection } from './Torrent/torrent'
+import { TorrentCollection } from './Torrent/Torrent'
 import { ErrorResponse } from './Error/Error'
 import { RequestParams } from './Request/Params'
 
