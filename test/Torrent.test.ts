@@ -1,4 +1,4 @@
-import { ITorrent } from '../src/Torrent/torrent'
+import { Torrent } from '../src/Torrent/torrent'
 
 describe('Torrent Casting', () => {
   it('should cast a basic torrent object', () => {
@@ -23,7 +23,7 @@ describe('Torrent Casting', () => {
       ranked: 1,
       info_page:
         'https://torrentapi.org/redirect_to_info.php?token=ai9m2o4web&p=1_5_1_4_9_7_5__f69a6749e3'
-    } as ITorrent
+    } as Torrent
     expect(obj.title).toBe('Life.in.Pieces.S03E15.WEBRip.x264-ION10')
     expect(obj.episode_info.epnum).toBe('15')
   })

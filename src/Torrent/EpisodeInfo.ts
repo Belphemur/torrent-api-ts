@@ -1,4 +1,4 @@
-export interface IEpisodeInfo {
+export interface EpisodeInfo {
   readonly imdb: string
   readonly tvdb: string
   readonly title: string
