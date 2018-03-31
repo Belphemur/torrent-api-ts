@@ -17,5 +17,5 @@ script:
   - yarn test:prod && yarn build
 after_success:
   - yarn report-coverage
-  - yarn deploy-docs
-  - yarn semantic-release
+  - yarn travis-deploy-once "yarn deploy-docs"
+  - yarn travis-deploy-once "yarn semantic-release"
