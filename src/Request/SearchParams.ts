@@ -17,19 +17,19 @@ export enum SortOrder {
 }
 
 export interface SearchParams extends RequestParams {
-  search_string?: string
-  search_imdb?: string
+  search_string?: string // tslint:disable-line
+  search_imdb?: string // tslint:disable-line
   category?: SearchCategory
   format?: JsonFormat
-  min_seeders?: number
-  min_leechers?: number
+  min_seeders?: number // tslint:disable-line
+  min_leechers?: number // tslint:disable-line
   ranked?: boolean
   sort?: SortOrder
   limit?: number
 }
 
 export class DefaultSearch implements SearchParams {
-  readonly search_string?: string
+  readonly search_string?: string // tslint:disable-line
   readonly category: SearchCategory
   format: JsonFormat = JsonFormat.JSON_EXTENDED
   ranked?: boolean = false
