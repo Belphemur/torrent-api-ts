@@ -104,9 +104,8 @@ export default class TorrentSearch {
         return this._delayedRequest<T>(params)
       })
       .catch(e => {
-        if (e.code && e.code === 4) {
+        if (e instanceof ErrorResponse && e.code === 4) {
           this._token.invalidate()
-
           return this._request<T>(params)
         }
         return Promise.reject(e)
@@ -126,11 +125,17 @@ export default class TorrentSearch {
         this._lastRequest = new Date()
         return new Promise<T>(resolve =>
           setTimeout(resolve, this._delayBetweenRequests - currentTimeDiff)
-        ).then(() => this._processRequest<T>(params))
+        )
+          .then(() => this._processRequest<T>(params))
+          .catch(e => {
+            throw e
+          })
       }
     }
     this._lastRequest = new Date()
-    return this._processRequest<T>(params)
+    return this._processRequest<T>(params).catch(e => {
+      throw e
+    })
   }
 
   /**
@@ -165,6 +170,9 @@ export default class TorrentSearch {
       })
       .then((data: any) => {
         return data as T
+      })
+      .catch(e => {
+        throw e
       })
   }
 }
