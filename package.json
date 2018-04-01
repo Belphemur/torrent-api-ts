@@ -100,7 +100,6 @@
     "@types/jest": "^22.0.0",
     "@types/nock": "^9.1.2",
     "@types/node": "^9.3.0",
-    "@types/request-promise": "^4.1.41",
     "colors": "^1.1.2",
     "commitizen": "^2.9.6",
     "coveralls": "^3.0.0",
@@ -134,7 +133,6 @@
     "validate-commit-msg": "^2.12.2"
   },
   "dependencies": {
-    "request": "^2.85.0",
-    "request-promise": "^4.2.2"
+    "axios": "^0.18.0"
   }
 }

@@ -3,7 +3,10 @@ import { SearchCategory } from '../src/Request/SearchParams'
 import nock from 'nock'
 import searchResponse from './response/search'
 import errorTokenInvalid from './response/errorToken'
+import axios from 'axios'
+import httpAdapter from 'axios/lib/adapters/http'
 
+axios.defaults.adapter = httpAdapter
 /**
  * Dummy test
  */

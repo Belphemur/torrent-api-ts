@@ -1,5 +1,5 @@
 import { Token, TokenResponse } from './Token/Token'
-import Request from 'request-promise'
+import Axios from 'axios'
 import { DefaultSearch, SearchCategory, SearchParams } from './Request/SearchParams'
 import { TorrentCollection } from './Torrent/Torrent'
 import { ErrorResponse } from './Error/Error'
@@ -38,17 +38,6 @@ export default class TorrentSearch {
    */
   set delayBetweenRequests(value: number) {
     this._delayBetweenRequests = value
-  }
-
-  private static _getQueryParams(params: RequestParams): string {
-    let str = []
-    for (let p in params) {
-      if (!params.hasOwnProperty(p)) {
-        continue
-      }
-      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(params[p]))
-    }
-    return str.join('&')
   }
 
   /**
@@ -148,14 +137,15 @@ export default class TorrentSearch {
 
     const options = {
       method: 'GET',
-      uri: this._endpoint + '?' + TorrentSearch._getQueryParams(params),
+      url: this._endpoint,
+      params: params,
       headers: {
         'User-Agent': this._userAgent
       }
     }
 
-    return Promise.resolve(Request(options))
-      .then((response: any) => JSON.parse(response))
+    return Axios.request(options)
+      .then((response: any) => response.data)
       .then((data: any) => {
         if (data.error_code) {
           return Promise.reject(new ErrorResponse(data.error, data.error_code))
