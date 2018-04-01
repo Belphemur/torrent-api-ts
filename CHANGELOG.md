@@ -1,3 +1,11 @@
+<a name="1.0.7"></a>
+## [1.0.7](https://github.com/Belphemur/torrent-api-ts/compare/v1.0.6...v1.0.7) (2018-04-01)
+
+
+### Performance Improvements
+
+* **request:** replace request by axios ([143e94c](https://github.com/Belphemur/torrent-api-ts/commit/143e94c))
+
 <a name="1.0.6"></a>
 ## [1.0.6](https://github.com/Belphemur/torrent-api-ts/compare/v1.0.5...v1.0.6) (2018-04-01)
 
