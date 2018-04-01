@@ -14,6 +14,6 @@ script:
   - yarn test:prod && if [[ $TRAVIS_BRANCH == 'master' ]]; then yarn build; fi
 after_success:
   - yarn report-coverage
-  - if [[ $TRAVIS_BRANCH == 'master' ]]; then greenkeeper-lockfile-upload ; fi
+  - greenkeeper-lockfile-upload
   - if [[ $TRAVIS_BRANCH == 'master' ]]; then yarn travis-deploy-once "yarn deploy-docs"; fi
   - if [[ $TRAVIS_BRANCH == 'master' ]]; then yarn travis-deploy-once "yarn semantic-release"; fi
