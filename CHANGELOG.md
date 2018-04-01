@@ -1,3 +1,12 @@
+<a name="1.0.5"></a>
+## [1.0.5](https://github.com/Belphemur/torrent-api-ts/compare/v1.0.4...v1.0.5) (2018-04-01)
+
+
+### Bug Fixes
+
+* **commonjs:** Build right es5 version ([b773638](https://github.com/Belphemur/torrent-api-ts/commit/b773638))
+* **commonjs:** Fix code for es5 ([f602c4a](https://github.com/Belphemur/torrent-api-ts/commit/f602c4a))
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/Belphemur/torrent-api-ts/compare/v1.0.3...v1.0.4) (2018-04-01)
 
