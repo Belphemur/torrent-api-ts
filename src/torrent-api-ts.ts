@@ -14,6 +14,12 @@ export default class TorrentSearch {
 
   private _endpoint: string = 'https://torrentapi.org/pubapi_v2.php'
 
+  /**
+   * The search object
+   * @param {string} appName needed TorrentApi to identify the client
+   * @param {string} userAgent in case the one we set stop workin (chrome vers. 60)
+   * @param {string} endpoint if the end point change and we didn't update fast enough, you can change it here
+   */
   constructor(appName: string, userAgent?: string, endpoint?: string) {
     this._appName = appName
     if (userAgent) {
@@ -64,6 +70,10 @@ export default class TorrentSearch {
     return this.searchAdvanced(new DefaultSearch(search, category))
   }
 
+  /**
+   * Ensure we have a valid token to do requests on their API
+   * @returns {Promise<Token>}
+   */
   private ensureToken(): Promise<Token> {
     if (this._token.hasExpired()) {
       return this._delayedRequest<TokenResponse>({ get_token: 'get_token' })
@@ -82,6 +92,12 @@ export default class TorrentSearch {
     return Promise.resolve(this._token)
   }
 
+  /**
+   * Do request on the api
+   * @param {RequestParams} params
+   * @returns {Promise<T>}
+   * @private
+   */
   private _request<T>(params: RequestParams): Promise<T> {
     return this.ensureToken()
       .then(() => {
@@ -96,10 +112,17 @@ export default class TorrentSearch {
       })
   }
 
+  /**
+   * The API is rate limited, be sure to only do the request in the right time to avoid hitting the rate limiting
+   * @param {RequestParams} params
+   * @returns {Promise<T>}
+   * @private
+   */
   private _delayedRequest<T>(params: RequestParams): Promise<T> {
     if (this._lastRequest) {
       const currentTimeDiff = Date.now() - +this._lastRequest
       if (currentTimeDiff <= this._delayBetweenRequests) {
+        this._lastRequest = new Date()
         return new Promise<T>(resolve =>
           setTimeout(resolve, this._delayBetweenRequests - currentTimeDiff)
         )
@@ -109,18 +132,25 @@ export default class TorrentSearch {
           })
       }
     }
+    this._lastRequest = new Date()
     return this._processRequest<T>(params).catch(e => {
       throw e
     })
   }
 
+  /**
+   * Set all the query parameters for the request
+   *
+   * Check also for token expired
+   * @param {RequestParams} params
+   * @returns {Promise<T>}
+   * @private
+   */
   private _processRequest<T>(params: RequestParams): Promise<T> {
     if (!this._token.hasExpired()) {
       params.token = this._token.token
     }
     params.app_id = this._appName
-
-    this._lastRequest = new Date()
 
     const options = {
       method: 'GET',
