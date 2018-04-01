@@ -1,4 +1,7 @@
 language: node_js
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
 cache:
   yarn: true
   directories:
