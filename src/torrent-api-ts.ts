@@ -4,13 +4,16 @@ import { DefaultSearch, SearchCategory, SearchParams } from './Request/SearchPar
 import { TorrentCollection } from './Torrent/Torrent'
 import { ErrorResponse } from './Error/Error'
 import { RequestParams } from './Request/Params'
+import PromiseQueue from 'promise-throttle'
 
 export default class TorrentSearch {
   private _appName: string
   private _userAgent: string = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'
   private _token: Token = Token.expired()
-  private _lastRequest: Date | null = null
-  private _delayBetweenRequests: number = 2100
+  private _queue: any = new PromiseQueue({
+    requestsPerSecond: 0.5,
+    promiseImplementation: Promise
+  })
 
   private _endpoint: string = 'https://torrentapi.org/pubapi_v2.php'
 
@@ -31,13 +34,13 @@ export default class TorrentSearch {
   }
 
   /**
-   * Change the delay between request.
+   * How many requests per seconds
    *
    * Only change this if you know what you're doing
    * @param {number} value
    */
-  set delayBetweenRequests(value: number) {
-    this._delayBetweenRequests = value
+  set requestsPerSeconds(value: number) {
+    this._queue.requestsPerSecond = value
   }
 
   /**
@@ -108,17 +111,7 @@ export default class TorrentSearch {
    * @private
    */
   private _delayedRequest<T>(params: RequestParams): Promise<T> {
-    if (this._lastRequest) {
-      const currentTimeDiff = Date.now() - +this._lastRequest
-      if (currentTimeDiff <= this._delayBetweenRequests) {
-        this._lastRequest = new Date()
-        return new Promise<T>(resolve =>
-          setTimeout(resolve, this._delayBetweenRequests - currentTimeDiff)
-        ).then(() => this._processRequest<T>(params))
-      }
-    }
-    this._lastRequest = new Date()
-    return this._processRequest<T>(params)
+    return this._queue.add(() => this._processRequest<T>(params))
   }
 
   /**
