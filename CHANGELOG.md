@@ -1,3 +1,16 @@
+<a name="1.0.6"></a>
+## [1.0.6](https://github.com/Belphemur/torrent-api-ts/compare/v1.0.5...v1.0.6) (2018-04-01)
+
+
+### Bug Fixes
+
+* **promise:** Wrong casting ([738011b](https://github.com/Belphemur/torrent-api-ts/commit/738011b))
+
+
+### Performance Improvements
+
+* **promise:** Don't use native es6 promise ([c10dae8](https://github.com/Belphemur/torrent-api-ts/commit/c10dae8))
+
 <a name="1.0.5"></a>
 ## [1.0.5](https://github.com/Belphemur/torrent-api-ts/compare/v1.0.4...v1.0.5) (2018-04-01)
 
