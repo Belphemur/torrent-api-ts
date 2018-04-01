@@ -125,17 +125,11 @@ export default class TorrentSearch {
         this._lastRequest = new Date()
         return new Promise<T>(resolve =>
           setTimeout(resolve, this._delayBetweenRequests - currentTimeDiff)
-        )
-          .then(() => this._processRequest<T>(params))
-          .catch(e => {
-            throw e
-          })
+        ).then(() => this._processRequest<T>(params))
       }
     }
     this._lastRequest = new Date()
-    return this._processRequest<T>(params).catch(e => {
-      throw e
-    })
+    return this._processRequest<T>(params)
   }
 
   /**
@@ -160,9 +154,9 @@ export default class TorrentSearch {
       }
     }
 
-    return Request(options)
+    return Promise.resolve(Request(options))
       .then((response: any) => JSON.parse(response))
-      .then(data => {
+      .then((data: any) => {
         if (data.error_code) {
           return Promise.reject(new ErrorResponse(data.error, data.error_code))
         }
@@ -170,9 +164,6 @@ export default class TorrentSearch {
       })
       .then((data: any) => {
         return data as T
-      })
-      .catch(e => {
-        throw e
       })
   }
 }
