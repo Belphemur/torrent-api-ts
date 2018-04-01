@@ -1,3 +1,6 @@
+<a name="1.0.8"></a>
+## [1.0.8](https://github.com/Belphemur/torrent-api-ts/compare/v1.0.7...v1.0.8) (2018-04-01)
+
 <a name="1.0.7"></a>
 ## [1.0.7](https://github.com/Belphemur/torrent-api-ts/compare/v1.0.6...v1.0.7) (2018-04-01)
 
