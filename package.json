@@ -1,6 +1,6 @@
 {
   "name": "torrent-api-ts",
-  "version": "0.0.0",
+  "version": "0.0.0-development",
   "description": "",
   "keywords": [],
   "main": "dist/torrent-api-ts.umd.js",
@@ -12,7 +12,7 @@
   "author": "Antoine Aflalo <antoine@aaflalo.me>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Belphemur/torrent-api-ts"
   },
   "license": "MIT",
   "engines": {
@@ -31,7 +31,8 @@
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
@@ -70,12 +71,13 @@
         "statements": 95
       }
     },
-    "collectCoverage": true,
-    "mapCoverage": true
+    "collectCoverage": true
   },
   "devDependencies": {
     "@types/jest": "^22.0.0",
+    "@types/nock": "^9.1.2",
     "@types/node": "^9.3.0",
+    "@types/request-promise-native": "^1.0.14",
     "colors": "^1.1.2",
     "commitizen": "^2.9.6",
     "coveralls": "^3.0.0",
@@ -85,6 +87,7 @@
     "jest": "^22.0.2",
     "lint-staged": "^7.0.0",
     "lodash.camelcase": "^4.3.0",
+    "nock": "^9.2.3",
     "prettier": "^1.4.4",
     "prompt": "^1.0.0",
     "replace-in-file": "^3.0.0-beta.2",
@@ -95,7 +98,9 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.12.0",
-    "semantic-release": "^15.0.0",
+    "semantic-release": "^15.1.4",
+    "semantic-release-cli": "^3.6.4",
+    "travis-deploy-once": "^4.4.1",
     "ts-jest": "^22.0.0",
     "ts-node": "^5.0.1",
     "tslint": "^5.8.0",
@@ -104,5 +109,9 @@
     "typedoc": "^0.11.0",
     "typescript": "^2.6.2",
     "validate-commit-msg": "^2.12.2"
+  },
+  "dependencies": {
+    "request": "^2.85.0",
+    "request-promise-native": "^1.0.5"
   }
 }
