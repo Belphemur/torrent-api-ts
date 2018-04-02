@@ -94,7 +94,7 @@
       "@semantic-release/npm"
     ],
     "analyzeCommits": {
-      "preset": "ESLint"
+      "preset": "angular"
     }
   },
   "devDependencies": {
