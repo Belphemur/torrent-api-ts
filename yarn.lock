@@ -5683,10 +5683,6 @@ promise-retry@^1.1.1:
     err-code "^1.0.0"
     retry "^0.10.0"
 
-promise-throttle@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/promise-throttle/-/promise-throttle-1.0.0.tgz#6ab608b743b20f6db2c8f8050108ac9d33bbb25c"
-
 prompt@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/prompt/-/prompt-1.0.0.tgz#8e57123c396ab988897fb327fd3aedc3e735e4fe"

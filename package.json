@@ -139,7 +139,6 @@
     "validate-commit-msg": "^2.12.2"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "promise-throttle": "^1.0.0"
+    "axios": "^0.18.0"
   }
 }
