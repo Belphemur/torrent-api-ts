@@ -4,16 +4,13 @@ import { DefaultSearch, SearchCategory, SearchParams } from './Request/SearchPar
 import { TorrentCollection } from './Torrent/Torrent'
 import { ErrorResponse } from './Error/Error'
 import { RequestParams } from './Request/Params'
-import PromiseQueue from 'promise-throttle'
+import { PromiseThrottler } from './Queue/PromiseThrottler'
 
 export default class TorrentSearch {
   private _appName: string
   private _userAgent: string = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'
   private _token: Token = Token.expired()
-  private _queue: any = new PromiseQueue({
-    requestsPerSecond: 0.5,
-    promiseImplementation: Promise
-  })
+  private _queue: PromiseThrottler = new PromiseThrottler(2000)
 
   private _endpoint: string = 'https://torrentapi.org/pubapi_v2.php'
 
@@ -34,13 +31,13 @@ export default class TorrentSearch {
   }
 
   /**
-   * How many requests per seconds
+   * Change delay between each request
    *
    * Only change this if you know what you're doing
    * @param {number} value
    */
-  set requestsPerSeconds(value: number) {
-    this._queue.requestsPerSecond = value
+  set delayBetweenRequests(value: number) {
+    this._queue.delayBetweenPromise = value
   }
 
   /**
@@ -111,7 +108,7 @@ export default class TorrentSearch {
    * @private
    */
   private _delayedRequest<T>(params: RequestParams): Promise<T> {
-    return this._queue.add(() => this._processRequest<T>(params))
+    return this._queue.add<T>(() => this._processRequest<T>(params))
   }
 
   /**

@@ -36,7 +36,7 @@ describe('Libary Test', () => {
     })
     it('Search Life in Parts', (done: any) => {
       let torrentSearch = new TorrentSearch('test')
-      torrentSearch.requestsPerSeconds = 200
+      torrentSearch.delayBetweenRequests = 200
       torrentSearch.search('Life.in.Pieces', SearchCategory.TV).then(collection => {
         expect(collection.torrent_results.length).toBe(1)
         const result = collection.torrent_results[0]
@@ -63,7 +63,7 @@ describe('Libary Test', () => {
 
     it('Reuse token for different search', (done: any) => {
       let torrentSearch = new TorrentSearch('test')
-      torrentSearch.requestsPerSeconds = 200
+      torrentSearch.delayBetweenRequests = 200
       torrentSearch
         .search('Life.in.Pieces', SearchCategory.TV)
         .then(collection => {
@@ -102,7 +102,7 @@ describe('Libary Test', () => {
 
     it('retry search on token failure', (done: any) => {
       let torrentSearch = new TorrentSearch('test')
-      torrentSearch.requestsPerSeconds = 200
+      torrentSearch.delayBetweenRequests = 200
       torrentSearch
         .search('Life.in.Pieces', SearchCategory.TV)
         .then(collection => {
@@ -124,7 +124,7 @@ describe('Libary Test', () => {
 
     it('retry search on token failure', (done: any) => {
       let torrentSearch = new TorrentSearch('test')
-      torrentSearch.requestsPerSeconds = 200
+      torrentSearch.delayBetweenRequests = 200
       torrentSearch.search('Life.in.Pieces', SearchCategory.TV).catch(() => done())
     })
   })
