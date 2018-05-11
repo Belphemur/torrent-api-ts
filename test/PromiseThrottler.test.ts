@@ -41,7 +41,7 @@ describe('Promise Throttler', () => {
     })
 
     promise.then(() => {
-      expect(Date.now() - start).toBeGreaterThanOrEqual(timing)
+      expect(Date.now() - start).toBeGreaterThanOrEqual(timing-5)
       done()
     })
   })
