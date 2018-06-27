@@ -99,7 +99,7 @@
   },
   "devDependencies": {
     "@semantic-release/changelog": "^2.0.1",
-    "@semantic-release/git": "^4.0.1",
+    "@semantic-release/git": "^5.0.0",
     "@types/jest": "^23.0.0",
     "@types/nock": "^9.1.2",
     "@types/node": "^10.0.2",
